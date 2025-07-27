@@ -37,7 +37,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const serverless = require("serverless-http");
-const route = require("../routes/userRoute.js");
+const route = require("/routes/userRoute.js");
 
 dotenv.config();
 
