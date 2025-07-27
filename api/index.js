@@ -31,29 +31,50 @@
 // app.use("/api", route);
 
 
+// const express = require("express");
+// const mongoose = require("mongoose");
+// const bodyParser = require("body-parser");
+// const cors = require("cors");
+// const dotenv = require("dotenv");
+// const serverless = require("serverless-http");
+// const route = require("/routes/userRoute.js");
+
+// dotenv.config();
+
+// const app = express();
+// app.use(bodyParser.json());
+// app.use(cors());
+// app.use("/api", route);
+
+// // MongoDB connection
+// const MONGOURL = process.env.MONGO_URL;
+// mongoose
+//   .connect(MONGOURL)
+//   .then(() => {
+//     console.log("DB connected successfully.");
+//   })
+//   .catch((error) => console.log(error));
+
+// // 🔁 Export serverless handler
+// module.exports = serverless(app);
+
+
 const express = require("express");
 const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
 const cors = require("cors");
-const dotenv = require("dotenv");
-const serverless = require("serverless-http");
-const route = require("/routes/userRoute.js");
-
-dotenv.config();
+const bodyParser = require("body-parser");
+const route = require("../routes/userRoutes"); // Adjust path accordingly
+require("dotenv").config();
 
 const app = express();
-app.use(bodyParser.json());
 app.use(cors());
+app.use(bodyParser.json());
 app.use("/api", route);
 
-// MongoDB connection
-const MONGOURL = process.env.MONGO_URL;
-mongoose
-  .connect(MONGOURL)
-  .then(() => {
-    console.log("DB connected successfully.");
-  })
+// DB connect — you can connect on cold start if needed
+mongoose.connect(process.env.MONGO_URL)
+  .then(() => console.log("DB connected."))
   .catch((error) => console.log(error));
 
-// 🔁 Export serverless handler
-module.exports = serverless(app);
+// 🔁 Export as a serverless function handler
+module.exports = app;
