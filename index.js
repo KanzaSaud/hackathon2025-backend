@@ -4,11 +4,17 @@ import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import route from "./routes/userRoute.js";
 import cors from "cors";
+import adminRoutes from "./routes/adminRoute.js";
+
 
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 dotenv.config();
+
+
+app.use("/api", route);
+app.use("/api/admin", adminRoutes);
 
 const PORT = process.env.PORT || 7000;
 const MONGOURL = process.env.MONGO_URL;
@@ -23,5 +29,4 @@ mongoose
   })
   .catch((error) => console.log(error));
 
-app.use("/api", route);
 
